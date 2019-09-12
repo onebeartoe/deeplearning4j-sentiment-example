@@ -1,0 +1,22 @@
+---
+
+- step:
+    name: build
+#    image: neomatrix369/dl4j-mnist-single-layer:v0.5
+    image: gregsi/docker-deeplearning4j-ui
+    command:
+      - ls -lah
+      - cd ${VH_REPOSITORY_DIR}/examples/cloud-devops-infra/valohai/MLPMnist/
+      - mvn package
+      - ls -lash
+      - echo "~~~ Copying the build jar file into ${VH_OUTPUTS_DIR}"
+      - cp target/MLPMnist-1.0.0-bin.jar ${VH_OUTPUTS_DIR}/MLPMnist-1.0.0.jar
+      - ls -lash ${VH_OUTPUTS_DIR}
+    environment: aws-eu-west-1-g2-2xlarge
+
+
+
+
+#try downloading the words from
+
+#    https://deeplearning4jblob.blob.core.windows.net/resources/wordvectors/GoogleNews-vectors-negative300.bin.gz
