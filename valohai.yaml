@@ -22,6 +22,7 @@
     name: train
     image: gregsi/docker-deeplearning4j-ui
     command:
+        - ls -lah /valohai/outputs
         - ls -lah ${VH_OUTPUTS_DIR}/
         - ls -lah ${VH_INPUTS_DIR}/
         - cp ${VH_INPUTS_DIR}/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
