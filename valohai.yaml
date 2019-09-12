@@ -21,6 +21,7 @@
     image: gregsi/docker-deeplearning4j-ui
     command:
       - echo "downloading dataset"
+      - pwd
       - ls -lash ${VH_INPUTS_DIR}/dataset/
       - cp ${VH_INPUTS_DIR}/dataset/default-blog-entry-background.png ${VH_OUTPUTS_DIR}/
       - ls -lash ${VH_OUTPUTS_DIR}/
