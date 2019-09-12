@@ -5,7 +5,6 @@
 #    image: neomatrix369/dl4j-mnist-single-layer:v0.5
     image: gregsi/docker-deeplearning4j-ui
     command:
-      - ls -lah
 #      - cd ${VH_REPOSITORY_DIR}/examples/cloud-devops-infra/valohai/MLPMnist/
       - mvn package
       - ls -lash
@@ -13,8 +12,6 @@
       - cp target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar ${VH_OUTPUTS_DIR}/
       - ls -lash ${VH_OUTPUTS_DIR}
     environment: aws-eu-west-1-t3-large
-#                AWS eu-west-1 t3.large
-#    environment: aws-eu-west-1-g2-2xlarge
 
 - step:
     name: download Google Word Vectors, palabra
@@ -28,6 +25,7 @@
     inputs:
       - name: dataset
         default: http://onebeartoe.org/images/default-blog-entry-background.png
+# Thanks for the download link for the word vectors; from StackOverflow comment from wm_eddie Feb 18 at 9:24 (https://stackoverflow.com/a/49610274/803890)
 #        default: https://deeplearning4jblob.blob.core.windows.net/resources/wordvectors/GoogleNews-vectors-negative300.bin.gz
         description: this is the dataset needed to train the model
     environment: aws-eu-west-1-t3-large
@@ -47,9 +45,3 @@
       - name: dataset
         description: this is the dataset needed to train the model
     environment: aws-eu-west-1-t3-large
-#    environment: aws-us-east-1-g3s-xlarge    
-
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!Look here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# try downloading the words from StackOverflow comment from wm_eddie Feb 18 at 9:24 (https://stackoverflow.com/a/49610274/803890)
-#    
-#    https://deeplearning4jblob.blob.core.windows.net/resources/wordvectors/GoogleNews-vectors-negative300.bin.gz
