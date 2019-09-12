@@ -26,7 +26,7 @@
         - ls -lah ${VH_OUTPUTS_DIR}/
         - ls -lah ${VH_INPUTS_DIR}/target
 # try running 'java -jar' on the target/ directory instead of copy the file        
-        - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
+#        - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
         - ls -lash 
         - java -jar dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar 
     inputs:
