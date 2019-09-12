@@ -16,19 +16,15 @@
 #                AWS eu-west-1 t3.large
 #    environment: aws-eu-west-1-g2-2xlarge
 
-
-
 - step:
     name: train
     image: gregsi/docker-deeplearning4j-ui
     command:
-        - ls -lah /valohai/outputs
-        - ls -lah ${VH_OUTPUTS_DIR}/
         - ls -lah ${VH_INPUTS_DIR}/target
 # try running 'java -jar' on the target/ directory instead of copy the file        
-#        - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
+        - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
         - ls -lash 
-        - java -jar ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar 
+        - java -jar dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar 
     inputs:
       - name: target
         description: DL4J Java app file (jar) generated in the build step
