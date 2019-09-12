@@ -18,6 +18,14 @@
 
 
 
+- step:
+    name: train
+    image: gregsi/docker-deeplearning4j-ui
+    command:
+        - ls -lash ${VH_OUTPUTS_DIR}
+        - java -jar ${VH_OUTPUTS_DIR}/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar 
+    environment: aws-us-east-1-g3s-xlarge
+
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!Look here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #try downloading the words from
 #
