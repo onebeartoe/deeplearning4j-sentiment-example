@@ -17,11 +17,24 @@
 #    environment: aws-eu-west-1-g2-2xlarge
 
 - step:
+    name: download-Google-Word Vectors, word
+    image: gregsi/docker-deeplearning4j-ui
+    command:
+      - echo "downloading dataset"
+      - ls -lash ${VH_INPUTS_DIR}/dataset/
+#      - cp target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar ${VH_OUTPUTS_DIR}/
+    inputs:
+      - name: dataset
+        default: http://onebeartoe.org/images/default-blog-entry-background.png
+#        default: https://deeplearning4jblob.blob.core.windows.net/resources/wordvectors/GoogleNews-vectors-negative300.bin.gz
+        description: this is the dataset needed to train the model      
+    environment: aws-eu-west-1-t3-large
+
+- step:
     name: train
     image: gregsi/docker-deeplearning4j-ui
     command:
         - ls -lah ${VH_INPUTS_DIR}/target
-# try running 'java -jar' on the target/ directory instead of copy the file        
         - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
         - ls -lash 
         - java -jar dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar 
@@ -32,6 +45,6 @@
 #    environment: aws-us-east-1-g3s-xlarge    
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!Look here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#try downloading the words from
-#
+# try downloading the words from StackOverflow comment from wm_eddie Feb 18 at 9:24 (https://stackoverflow.com/a/49610274/803890)
+#    
 #    https://deeplearning4jblob.blob.core.windows.net/resources/wordvectors/GoogleNews-vectors-negative300.bin.gz
