@@ -12,7 +12,9 @@
       - echo "~~~ Copying the build jar file into ${VH_OUTPUTS_DIR}"
       - cp target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar ${VH_OUTPUTS_DIR}/
       - ls -lash ${VH_OUTPUTS_DIR}
-    environment: aws-eu-west-1-g2-2xlarge
+    environment: aws-us-east-1-g3s-xlarge
+#                AWS us-east-1 t3.large
+#    environment: aws-eu-west-1-g2-2xlarge
 
 
 
