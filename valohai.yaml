@@ -22,7 +22,7 @@
     command:
       - echo "downloading dataset"
       - ls -lash ${VH_INPUTS_DIR}/dataset/
-      - cp dataset/default-blog-entry-background.png ${VH_OUTPUTS_DIR}/
+      - cp ${VH_INPUTS_DIR}/dataset/default-blog-entry-background.png ${VH_OUTPUTS_DIR}/
       - ls -lash ${VH_OUTPUTS_DIR}/
     inputs:
       - name: dataset
