@@ -26,11 +26,14 @@ public class Word2VecSentimentRnnEvaluate
 {
     public static void main(String[] args) throws Exception 
     {
+        System.out.println("----- Evaluation initializing -----");
+        
         String trainedModelPath = null;
         
         if(args.length != 0)
         {
             trainedModelPath = args[0];
+            
             System.out.println("using command line arguement for trained model path: " + trainedModelPath);
         }
         else
@@ -39,7 +42,7 @@ public class Word2VecSentimentRnnEvaluate
             System.exit(1);
         }
         
-        System.out.println("----- Evaluation complete -----");
+        System.out.println("----- Evaluation starting -----");
         
         Word2VecSentimentRnnEvaluate deepLearner = new Word2VecSentimentRnnEvaluate();
         
