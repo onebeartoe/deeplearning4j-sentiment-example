@@ -72,9 +72,11 @@ public class Word2VecSentimentRnnEvaluate
     private void evaluate(SentimentExampleIterator test, MultiLayerNetwork model, int truncateReviewsToLength) throws IOException
     {
         //After training: load a single example and generate predictions
-        File shortNegativeReviewFile = new File(FilenameUtils.concat(DATA_PATH, "aclImdb/test/neg/12100_1.txt"));
-        String shortNegativeReview = FileUtils.readFileToString(shortNegativeReviewFile);
-
+//        File shortNegativeReviewFile = new File(FilenameUtils.concat(DATA_PATH, "aclImdb/test/neg/12100_1.txt"));
+//        String shortNegativeReview = FileUtils.readFileToString(shortNegativeReviewFile);
+        String shortNegativeReview = "Boy, did that movie suck. It was like a bad version of my least favorite cartoon";
+        
+        
         INDArray features = test.loadFeaturesFromString(shortNegativeReview, truncateReviewsToLength);
         INDArray networkOutput = model.output(features);
         long timeSeriesLength = networkOutput.size(2);
