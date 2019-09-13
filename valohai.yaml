@@ -45,4 +45,5 @@
         description: DL4J Java app file (jar) generated in the build step
       - name: dataset
         description: this is the dataset needed to train the model
-    environment: aws-eu-west-1-t3-large
+    environment: aws-eu-west-1-t3-xlarge
+
