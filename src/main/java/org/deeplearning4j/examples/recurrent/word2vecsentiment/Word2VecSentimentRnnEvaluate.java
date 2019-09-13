@@ -3,12 +3,9 @@ package org.deeplearning4j.examples.recurrent.word2vecsentiment;
 
 import java.io.File;
 import java.io.IOException;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import static org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnTrain.DATA_PATH;
 import static org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnTrain.WORD_VECTORS_PATH;
 import static org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnTrain.batchSize;
-import static org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnTrain.modelOutfile;
 import static org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnTrain.truncateReviewsToLength;
 import org.deeplearning4j.models.embeddings.loader.WordVectorSerializer;
 import org.deeplearning4j.models.embeddings.wordvectors.WordVectors;
