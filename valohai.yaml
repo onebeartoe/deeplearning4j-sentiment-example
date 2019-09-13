@@ -58,7 +58,7 @@
         - ls -lah ${VH_INPUTS_DIR}/target
         - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
         - ls -lash
-        - java -cp dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnEvaluate 
+        - java -cp dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnEvaluate ${VH_INPUTS_DIR}/trained-model/trained-model.zip
     inputs:
       - name: target
         description: DL4J Java app file (jar) generated in the build step

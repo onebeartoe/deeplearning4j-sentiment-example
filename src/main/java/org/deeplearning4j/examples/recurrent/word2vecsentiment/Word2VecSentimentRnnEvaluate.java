@@ -26,16 +26,24 @@ public class Word2VecSentimentRnnEvaluate
 {
     public static void main(String[] args) throws Exception 
     {
+        String trainedModelPath = null;
+        
         if(args.length != 0)
         {
-            
+            trainedModelPath = args[0];
+            System.out.println("using command line arguement for trained model path: " + trainedModelPath);
+        }
+        else
+        {
+            System.out.println("please provide the path the trained model as an command line argument.");
+            System.exit(1);
         }
         
         System.out.println("----- Evaluation complete -----");
         
         Word2VecSentimentRnnEvaluate deepLearner = new Word2VecSentimentRnnEvaluate();
         
-        MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(modelOutfile);                
+        MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(trainedModelPath);                
 
         WordVectors wordVectors = WordVectorSerializer.loadStaticModel(new File(WORD_VECTORS_PATH));
         
