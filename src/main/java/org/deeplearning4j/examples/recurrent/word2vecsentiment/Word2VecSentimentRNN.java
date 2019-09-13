@@ -41,6 +41,7 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import org.deeplearning4j.util.ModelSerializer;
 
 /**Example: Given a movie review (raw text), classify that movie review as either positive or negative based on the words it contains.
  * This is done by combining Word2Vec vectors and a recurrent neural network model. Each word in a review is vectorized
@@ -131,14 +132,21 @@ System.out.println("debug")        ;
         
         // save the trained model
         
+        boolean saveUpdatesForFurtherTrainging = false;
         
+        File modelOutfile = new File("trained-model.zip");
 
-        evaluate(test, model, truncateReviewsToLength);
+        ModelSerializer.writeModel(model, modelOutfile, saveUpdatesForFurtherTrainging);
+        
+        // evaluate
+
+//        evaluate(test, model, truncateReviewsToLength);
         
         System.out.println("----- Example complete -----");
     }
 
-    public static void downloadData() throws Exception {
+    public static void downloadData() throws Exception 
+    {
         //Create directory if required
         File directory = new File(DATA_PATH);
         if(!directory.exists()) directory.mkdir();

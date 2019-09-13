@@ -40,6 +40,9 @@
         - ls -lash 
         - java -Dorg.bytedeco.javacpp.maxbytes=10G -Dorg.bytedeco.javacpp.maxphysicalbytes=12G -jar dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar ${VH_INPUTS_DIR}/dataset/GoogleNews-vectors-negative300.bin.gz
 #        - java -jar dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar ${VH_INPUTS_DIR}/dataset/default-blog-entry-background.png
+        - ls -lash
+        - cp trained-model.zip ${VH_OUTPUTS_DIR}/
+        - ls -lash ${VH_OUTPUTS_DIR}
     inputs:
       - name: target
         description: DL4J Java app file (jar) generated in the build step
