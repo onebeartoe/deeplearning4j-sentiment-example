@@ -54,12 +54,14 @@
     name: evaluate
     image: gregsi/docker-deeplearning4j-ui
     command:
-        - ls -lah ${VH_INPUTS_DIR}/dataset
+        - ls -lah ${VH_INPUTS_DIR}/trained-model
         - ls -lah ${VH_INPUTS_DIR}/target
         - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
         - ls -lash
-        - java -cp dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnEvaluate ${VH_INPUTS_DIR}/dataset/GoogleNews-vectors-negative300.bin.gz
+        - java -cp dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnEvaluate 
     inputs:
       - name: target
         description: DL4J Java app file (jar) generated in the build step
+      - name: trained-model
+        description: this is the output file from the 'train' step 
     environment: aws-eu-west-1-t3-large
