@@ -64,26 +64,39 @@ public class Word2VecSentimentRnnEvaluate
         
         SentimentExampleIterator test = new SentimentExampleIterator(DATA_PATH, wordVectors, batchSize, truncateReviewsToLength, false);
         
-        deepLearner.evaluate(test, model, truncateReviewsToLength);
+        // expected bad review
+        String shortNegativeReview = "Boy, did that movie suck. It was like a bad version of my least favorite cartoon.";        
+        deepLearner.evaluate(test, model, truncateReviewsToLength, shortNegativeReview);
+        
+        // another expected bad review
+        String secondBadReview = "Homer - Yeah Moe that team sure did suck last night. They just plain sucked! I've seen teams suck before, but they were the suckiest bunch of sucks that ever sucked.";                
+        deepLearner.evaluate(test, model, truncateReviewsToLength, secondBadReview);
+        
+        // a good review follows (hopefully)
+        String goodReview = "Boy, did I sure enjoy that movie.  It was great!";        
+        deepLearner.evaluate(test, model, truncateReviewsToLength, goodReview);
         
         System.out.println("----- Evaluation complete -----");
     }
-    
-    private void evaluate(SentimentExampleIterator test, MultiLayerNetwork model, int truncateReviewsToLength) throws IOException
+
+    /**
+     * After training: load a single example and generate predictions
+     * @param test
+     * @param model
+     * @param truncateReviewsToLength
+     * @param review
+     * @throws IOException 
+     */
+    private void evaluate(SentimentExampleIterator test, MultiLayerNetwork model, 
+                            int truncateReviewsToLength, String review) throws IOException
     {
-        //After training: load a single example and generate predictions
-//        File shortNegativeReviewFile = new File(FilenameUtils.concat(DATA_PATH, "aclImdb/test/neg/12100_1.txt"));
-//        String shortNegativeReview = FileUtils.readFileToString(shortNegativeReviewFile);
-        String shortNegativeReview = "Boy, did that movie suck. It was like a bad version of my least favorite cartoon";
-        
-        
-        INDArray features = test.loadFeaturesFromString(shortNegativeReview, truncateReviewsToLength);
+        INDArray features = test.loadFeaturesFromString(review, truncateReviewsToLength);
         INDArray networkOutput = model.output(features);
         long timeSeriesLength = networkOutput.size(2);
         INDArray probabilitiesAtLastWord = networkOutput.get(NDArrayIndex.point(0), NDArrayIndex.all(), NDArrayIndex.point(timeSeriesLength - 1));
 
         System.out.println("\n\n-------------------------------");
-        System.out.println("Short negative review: \n" + shortNegativeReview);
+        System.out.println("Review: \n" + review);
         System.out.println("\n\nProbabilities at last time step:");
         System.out.println("p(positive): " + probabilitiesAtLastWord.getDouble(0));
         System.out.println("p(negative): " + probabilitiesAtLastWord.getDouble(1));
