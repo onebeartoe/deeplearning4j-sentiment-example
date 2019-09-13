@@ -117,8 +117,8 @@ System.out.println("debug")        ;
                 .lossFunction(LossFunctions.LossFunction.MCXENT).nIn(256).nOut(2).build())
             .build();
 
-        MultiLayerNetwork net = new MultiLayerNetwork(conf);
-        net.init();
+        MultiLayerNetwork model = new MultiLayerNetwork(conf);
+        model.init();
 
         //DataSetIterators for training and testing respectively
         WordVectors wordVectors = WordVectorSerializer.loadStaticModel(new File(WORD_VECTORS_PATH));
@@ -126,10 +126,14 @@ System.out.println("debug")        ;
         SentimentExampleIterator test = new SentimentExampleIterator(DATA_PATH, wordVectors, batchSize, truncateReviewsToLength, false);
 
         System.out.println("Starting training");
-        net.setListeners(new ScoreIterationListener(1), new EvaluativeListener(test, 1, InvocationType.EPOCH_END));
-        net.fit(train, nEpochs);
+        model.setListeners(new ScoreIterationListener(1), new EvaluativeListener(test, 1, InvocationType.EPOCH_END));
+        model.fit(train, nEpochs);
+        
+        // save the trained model
+        
+        
 
-        evaluate(test, net, truncateReviewsToLength);
+        evaluate(test, model, truncateReviewsToLength);
         
         System.out.println("----- Example complete -----");
     }
