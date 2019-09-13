@@ -99,6 +99,8 @@ public class Word2VecSentimentRNN {
         int truncateReviewsToLength = 256;  //Truncate reviews with length (# words) greater than this
         final int seed = 0;     //Seed for reproducibility
 
+System.out.println("debug")        ;
+        
         Nd4j.getMemoryManager().setAutoGcWindow(10000);  //https://deeplearning4j.org/workspaces
 
         //Set up network configuration
