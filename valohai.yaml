@@ -37,7 +37,7 @@
         - ls -lah ${VH_INPUTS_DIR}/dataset
         - ls -lah ${VH_INPUTS_DIR}/target
         - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
-        - ls -lash 
+        - ls -lash
         - java -Dorg.bytedeco.javacpp.maxbytes=10G -Dorg.bytedeco.javacpp.maxphysicalbytes=12G -jar dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar ${VH_INPUTS_DIR}/dataset/GoogleNews-vectors-negative300.bin.gz
 #        - java -jar dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar ${VH_INPUTS_DIR}/dataset/default-blog-entry-background.png
         - ls -lash
@@ -50,3 +50,16 @@
         description: this is the dataset needed to train the model
     environment: aws-eu-west-1-t3-xlarge
 
+- step:
+    name: evaluate
+    image: gregsi/docker-deeplearning4j-ui
+    command:
+        - ls -lah ${VH_INPUTS_DIR}/dataset
+        - ls -lah ${VH_INPUTS_DIR}/target
+        - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
+        - ls -lash
+        - java -cp dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnEvaluate ${VH_INPUTS_DIR}/dataset/GoogleNews-vectors-negative300.bin.gz
+    inputs:
+      - name: target
+        description: DL4J Java app file (jar) generated in the build step
+    environment: aws-eu-west-1-t3-large

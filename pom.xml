@@ -63,7 +63,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRNN
+                                org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnTrain
                             </mainClass>
                         </manifest>
                     </archive>

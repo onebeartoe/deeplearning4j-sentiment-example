@@ -66,16 +66,26 @@ import org.deeplearning4j.util.ModelSerializer;
  *
  * @author Alex Black
  */
-public class Word2VecSentimentRNN {
-
+public class Word2VecSentimentRnnTrain 
+{
     /** Data URL for downloading */
     public static final String DATA_URL = "http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz";
+ 
     /** Location to save and extract the training/testing data */
     public static final String DATA_PATH = FilenameUtils.concat(System.getProperty("java.io.tmpdir"), "dl4j_w2vSentiment/");
 
     /** Location (local file system) for the Google News vectors. Set this manually. */
     public static String WORD_VECTORS_PATH = "/PATH/TO/YOUR/VECTORS/GoogleNews-vectors-negative300.bin.gz";
 
+    public static int truncateReviewsToLength = 256;  //Truncate reviews with length (# words) greater than this
+
+    public static final File modelOutfile = new File("trained-model.zip");;
+    
+    /**
+     * This int holds the number of examples in each minibatch.
+     */
+    public static final int batchSize = 64;
+    
     public static void main(String[] args) throws Exception 
     {
         if(args.length != 0)
@@ -94,13 +104,11 @@ public class Word2VecSentimentRNN {
         //Download and extract data
         downloadData();
 
-        int batchSize = 64;     //Number of examples in each minibatch
         int vectorSize = 300;   //Size of the word vectors. 300 in the Google News model
-        int nEpochs = 1;        //Number of epochs (full passes of training data) to train on
-        int truncateReviewsToLength = 256;  //Truncate reviews with length (# words) greater than this
-        final int seed = 0;     //Seed for reproducibility
 
-System.out.println("debug")        ;
+        int nEpochs = 1;        //Number of epochs (full passes of training data) to train on
+        
+        final int seed = 0;     //Seed for reproducibility
         
         Nd4j.getMemoryManager().setAutoGcWindow(10000);  //https://deeplearning4j.org/workspaces
 
@@ -123,23 +131,23 @@ System.out.println("debug")        ;
 
         //DataSetIterators for training and testing respectively
         WordVectors wordVectors = WordVectorSerializer.loadStaticModel(new File(WORD_VECTORS_PATH));
+        
         SentimentExampleIterator train = new SentimentExampleIterator(DATA_PATH, wordVectors, batchSize, truncateReviewsToLength, true);
+        
         SentimentExampleIterator test = new SentimentExampleIterator(DATA_PATH, wordVectors, batchSize, truncateReviewsToLength, false);
 
         System.out.println("Starting training");
+        
         model.setListeners(new ScoreIterationListener(1), new EvaluativeListener(test, 1, InvocationType.EPOCH_END));
+        
         model.fit(train, nEpochs);
         
-        // save the trained model
-        
+        // save the trained model        
         boolean saveUpdatesForFurtherTrainging = false;
         
-        File modelOutfile = new File("trained-model.zip");
-
         ModelSerializer.writeModel(model, modelOutfile, saveUpdatesForFurtherTrainging);
         
         // evaluate
-
 //        evaluate(test, model, truncateReviewsToLength);
         
         System.out.println("----- Example complete -----");
@@ -157,41 +165,27 @@ System.out.println("debug")        ;
         String extractedPath = DATA_PATH + "aclImdb";
         File extractedFile = new File(extractedPath);
 
-        if( !archiveFile.exists() ){
+        if( !archiveFile.exists() )
+        {
             System.out.println("Starting data download (80MB)...");
             FileUtils.copyURLToFile(new URL(DATA_URL), archiveFile);
             System.out.println("Data (.tar.gz file) downloaded to " + archiveFile.getAbsolutePath());
             //Extract tar.gz file to output directory
             DataUtilities.extractTarGz(archizePath, DATA_PATH);
-        } else {
+        } 
+        else 
+        {
             //Assume if archive (.tar.gz) exists, then data has already been extracted
             System.out.println("Data (.tar.gz file) already exists at " + archiveFile.getAbsolutePath());
-            if( !extractedFile.exists()){
+            if( !extractedFile.exists())
+            {
             	//Extract tar.gz file to output directory
             	DataUtilities.extractTarGz(archizePath, DATA_PATH);
-            } else {
+            } 
+            else 
+            {
             	System.out.println("Data (extracted) already exists at " + extractedFile.getAbsolutePath());
             }
         }
-    }
-
-    private static void evaluate(SentimentExampleIterator test, MultiLayerNetwork net, int truncateReviewsToLength) throws IOException
-    {
-        //After training: load a single example and generate predictions
-        File shortNegativeReviewFile = new File(FilenameUtils.concat(DATA_PATH, "aclImdb/test/neg/12100_1.txt"));
-        String shortNegativeReview = FileUtils.readFileToString(shortNegativeReviewFile);
-
-        INDArray features = test.loadFeaturesFromString(shortNegativeReview, truncateReviewsToLength);
-        INDArray networkOutput = net.output(features);
-        long timeSeriesLength = networkOutput.size(2);
-        INDArray probabilitiesAtLastWord = networkOutput.get(NDArrayIndex.point(0), NDArrayIndex.all(), NDArrayIndex.point(timeSeriesLength - 1));
-
-        System.out.println("\n\n-------------------------------");
-        System.out.println("Short negative review: \n" + shortNegativeReview);
-        System.out.println("\n\nProbabilities at last time step:");
-        System.out.println("p(positive): " + probabilitiesAtLastWord.getDouble(0));
-        System.out.println("p(negative): " + probabilitiesAtLastWord.getDouble(1));
-
-        System.out.println("----- Evaluate complete -----");
     }
 }
