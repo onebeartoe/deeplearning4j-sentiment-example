@@ -82,7 +82,7 @@ public class Word2VecSentimentRNN {
             WORD_VECTORS_PATH = args[0];
             
             //TODO: introduce a logger
-            System.out.println("using command line argument as word vectors path::: " + WORD_VECTORS_PATH);
+            System.out.println("using command line argument as word vectors path: " + WORD_VECTORS_PATH);
         }
         
         if(WORD_VECTORS_PATH.startsWith("/PATH/TO/YOUR/VECTORS/"))
