@@ -62,6 +62,8 @@
     inputs:
       - name: target
         description: DL4J Java app file (jar) generated in the build step
+      - name: dataset
+        description: this is the dataset needed to train the model
       - name: trained-model
         description: this is the output file from the 'train' step 
     environment: aws-eu-west-1-t3-large
