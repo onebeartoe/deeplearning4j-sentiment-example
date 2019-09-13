@@ -45,6 +45,7 @@ public class Word2VecSentimentRnnEvaluate
         
         if(args.length > 1)
         {
+//TODO: eek!  stop using this class member this way.  it hurts my soul!            
             WORD_VECTORS_PATH = args[1];
         }
         else
