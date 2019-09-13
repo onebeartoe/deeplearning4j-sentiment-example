@@ -25,7 +25,7 @@
     inputs:
       - name: dataset
 #        default: http://onebeartoe.org/images/default-blog-entry-background.png
-# Thanks for the download link for the word vectors; from StackOverflow comment from wm_eddie Feb 18 at 9:24 (https://stackoverflow.com/a/49610274/803890)
+# Thanks  wm_eddie for the download link for the word vectors; from StackOverflow comment from Feb 18 at 9:24 (https://stackoverflow.com/a/49610274/803890)
         default: https://deeplearning4jblob.blob.core.windows.net/resources/wordvectors/GoogleNews-vectors-negative300.bin.gz
         description: this is the dataset needed to train the model
     environment: aws-eu-west-1-t3-large
@@ -58,7 +58,7 @@
         - ls -lah ${VH_INPUTS_DIR}/target
         - cp ${VH_INPUTS_DIR}/target/dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar .
         - ls -lash
-        - java -cp dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnEvaluate ${VH_INPUTS_DIR}/trained-model/trained-model.zip
+        - java -cp dl4j-sentiment-example-1.0.0-jar-with-dependencies.jar org.deeplearning4j.examples.recurrent.word2vecsentiment.Word2VecSentimentRnnEvaluate ${VH_INPUTS_DIR}/trained-model/trained-model.zip ${VH_INPUTS_DIR}/dataset/GoogleNews-vectors-negative300.bin.gz
     inputs:
       - name: target
         description: DL4J Java app file (jar) generated in the build step
@@ -66,4 +66,6 @@
         description: this is the dataset needed to train the model
       - name: trained-model
         description: this is the output file from the 'train' step 
+      - name: dataset
+        description: this is the dataset needed to train the model        
     environment: aws-eu-west-1-t3-large
